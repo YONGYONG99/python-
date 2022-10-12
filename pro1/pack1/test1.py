@@ -1,8 +1,4 @@
-'''
-Created on 2022. 9. 30.
 
-@author: acorn
-'''
 #한줄 주석
 
 var1 = '안녕'
