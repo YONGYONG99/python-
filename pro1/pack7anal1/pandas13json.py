@@ -29,4 +29,4 @@ for ele in libDatas:
 import pandas as pd
 df = pd.DataFrame(datas, columns=['이름','전화','주소'])
 print(df)
-print(df.to_html()) # 나중에 장고 쓸때 html로 뿌리는용으로 사용 가능
+# print(df.to_html()) # 나중에 장고 쓸때 html로 뿌리는용으로 사용 가능
