@@ -31,7 +31,7 @@ print('------------')
 # 조건
 df = pd.DataFrame(np.arange(12).reshape(4,3), index = ['1월','2월','3월','4월'], columns=['강남','강북','서초'])
 print(df)
-
+print('요기')
 print(df['강남'])
 print(df['강남'] > 3)
 print(df[df['강남']>3]) # 조건이 참인 행을 출력

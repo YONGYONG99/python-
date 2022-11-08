@@ -25,7 +25,7 @@ print('정규성 확인 : ', stats.shapiro(one_sample)) # pvalue=0.5400 > 0.05 �
 # plt.plot(one_sample)
 # plt.show()
 
-result = stats.ttest_1samp(one_sample, popmean=170) # popmean : 귀무가설의 기대값
+result = stats.ttest_1samp(one_sample, popmean=170) # 1samp : 집단이 하나 / popmean : 귀무가설의 기대값 
 # result = stats.ttest_1samp(one_sample, popmean=160)
 print('result : statistic(t-value) : {}, p-value:{}'.format(result[0], result[1])) 
 # 해석 : p-value:0.15224 > 0.05 이므로 귀무가설 채택. 집단의 평균 키가 170이다.
@@ -64,6 +64,9 @@ print("실습 예제 4")
 # 여아 신생아의 몸무게는 평균이 2800(g)으로 알려져 왔으나 이보다 더 크다는 주장이 나왔다.
 # 표본으로 여아 18명을 뽑아 체중을 측정하였다고 할 때 새로운 주장이 맞는지 검정해 보자.
 
+# 귀무 : 여아 신생아의 몸무게는 평균이 2800(g)이다.
+# 대립 : 여아 신생아의 몸무게는 평균이 2800(g)보다 크다.
+
 babyData = pd.read_csv("../testdata/babyboom.csv")
 print(babyData.head(3))
 #print(babyData.describe())
@@ -82,18 +85,7 @@ print(np.mean(fdata.weight)) # 3132.444 vs 2800 차이가 있는거야 없는거
 # print('정규성 :', stats.shapiro(fdata.iloc[:,2])) # pvalue=0.01798 < 0.05 이므로 정규성 만족 못함.
 result4 = stats.ttest_1samp(fdata.weight, popmean=2800)
 print('result4 : statistic(t-value) : {}, p-value:{}'.format(result4[0], result4[1]))
-# 해석 : p-value:0.1985 > 0.05 이므로 귀무가설 채택. A중학교 1학년 1반 학생들의 국어 점수 평균은 80이다.
-
-
-
-
-
-
-
-
-
-
-
+# 해석 : p-value:0.03926 < 0.05 이므로 귀무가설 기각. 여아 신생아의 몸무게는 평균이 2800(g)보다 증가 하였다.
 
 
 
