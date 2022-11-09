@@ -44,7 +44,7 @@ print()
 obj3.name = '상품가격'
 print(obj3)
 
-
+print('dataframe')
 # DataFrame :
 # 표 모양(2차원 형태 자료)의 자료구조로 여러 개의 칼럼을 갖는다. (Series가 모인 형태)
 # 각 칼럼은 서로 다른 종류의 값을 기억할 수 있다.

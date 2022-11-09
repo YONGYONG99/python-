@@ -71,7 +71,7 @@ seri = df1.iloc[0]
 print(seri)
 print(df1 - seri) # Broadcastion 연산(전파되기)
 
-print()
+print('오')
 # 기술적 통계와 관련된 메소드(함수)
 df = pd.DataFrame([[1.4, np.nan],[7, -4.5],[np.NaN, np.NAN],[0.5,-1]], columns=['one','two'])
 print(df)
@@ -84,7 +84,7 @@ print(df.dropna()) # na가 있는행 다 지우기
 print(df.dropna(how='any')) # 하나라도 있으면
 print(df.dropna(how='all')) # 모두 있어야
 print(df.dropna(axis='rows'))
-print()
+print('이')
 print(df.fillna(0)) # 결측치를 0또는 평균 등의 값으로 대체
 print(df.fillna(method='ffill'))
 print(df.fillna(method='bfill'))

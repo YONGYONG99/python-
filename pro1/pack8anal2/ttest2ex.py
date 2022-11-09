@@ -85,9 +85,9 @@ try:
     df = pd.DataFrame(ar, columns = ['부서','연봉'])
     print(df.head(10))
     pay1 = np.array(df[df['부서'] == 10])[:, 1]
-    pay2 = np.array(df[df['부서'] == 20])[:, 1]
-    # print(pay1)
-    # print(pay2)
+    pay2 = np.array(df[df['부서'] == 20].연봉)
+    print(pay1)
+    print(pay2)
     print(average(pay1), ' ', average(pay2))
     two_sample3 = stats.ttest_ind(pay1, pay2) # 두 개의 표본에 대한 t-test 실시
     print(two_sample3)
