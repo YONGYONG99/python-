@@ -4,8 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 공분산 예
-print(np.arange(1,6), np.arange(2,7))
-print(np.cov(np.arange(1,6), np.arange(2,7))) # 2.5
+print(np.arange(1,6), np.arange(2,7)) # [1 2 3 4 5] [2 3 4 5 6]
+print(np.cov(np.arange(1,6), np.arange(2,7)))
+# [[2.5 2.5]
+#  [2.5 2.5]]
 print()
 print(np.arange(1,6), (3,3,3,3,3))
 print(np.cov(np.arange(1,6), (3,3,3,3,3))) # 0

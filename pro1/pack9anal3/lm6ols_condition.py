@@ -70,6 +70,77 @@ print(np.mean(residual))
 
 print()
 print('선형성 : 독립변수의 변화에 따라 종속변수도 변화하나 일정한 패턴을 가지면 좋지 않다.')
+# 예측값과 잔차가 비슷하게 유지되어야함
+sns.regplot(fitted, residual, lowess=True, line_kws={'color':'red'})
+plt.plot([fitted.min(), fitted.max()], [0,0], '--')
+plt.show() # 빨간 실선이 잔차의 추세이다. 점선은 예측값 / 이 둘이 비슷한 수준으로 흘러가야한다.
+# 위 데이터는 선형성을 만족하지 못함 -> 이럴땐 다항회귀를 추천
+
+print('정규성 : 독립변수들의 잔차항이 정규분포를 따라야 한다.')
+# Q-Q plot으로 확인
+import scipy.stats
+sr = scipy.stats.zscore(residual) # 표본에 있는 각 값의 z값을 계산
+(x, y), _ = scipy.stats.probplot(sr)
+sns.scatterplot(x,y)
+plt.plot([-3,3] , [-3,3], '--', color='gray')
+plt.show() # 분포가 점선을 따라 쭉 따라가야하는데 커브를 그리고 있다.
+# 정규성을 만족하지 못함 : log를 취하는 등의 작업을 통해 정규분포를 따르도록 데이터 가공 작업 필요
+
+# 정규성은 shapiro test로 확인 가능
+print('shapiro test : ', scipy.stats.shapiro(residual)) # pvalue=4.190036317908152e-09 < 0.05 이므로 정규성 만족 못함
+
+print('독립성 : 독립변수들 간의 값이 서로 관련성이 없어야 한다. 잔차가 독립적이어야 함(자기상관이 없어야함)')
+# Durbin-Watsion : 잔차의 독립성 만족여부 확인 가능. 2에 근사하면 자기상관이 없다. 0 <- 양의 상관 - 2독립성 - 음의 상관 -> 4 (0에 가까울수록 양의, 4의 가까울수록 음의 상관관계)
+# Durbin-Watson: 2.081
+# summary()로 확인한 결과 2.081 이므로 잔차의 독립성 만족
+
+print('등분산성 : 독립변수들의 오차(잔차)의 분산은 일정해야 한다. 특정한 패턴 없이 고르게 분포되어야 한다.')
+sns.regplot(fitted, np.sqrt(np.abs(sr)), lowess=True , line_kws={'color':'red'})
+plt.show() # 빨간색 실선이 완만하게 수평이 될수로 좋다. 
+# 일정한 패턴의 곡선을 그리므로 등분산성을 만족하지 못함
+# 이럴땐 아웃라이어 확인, 비선형인지 확인, 정규성을 확인
+# 정규성은 만족하나 등분산성을 만족하지 못하는 경우에는 가중회귀분석을 추천
+
+print('다중공선성 : 독립변수들 간에 강한 상관관계로 인한 문제가 발생하지 않아야 한다.')
+# VIF(분산팽창계수)를 사용해서 확인
+# VIF가 10이 넘으면 다중공선성 있다고 판단하며 5가 넘으면 주의할 필요가 있다.
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+# summay()의 결과에서 coef의 순서는 Intercept:0, tv:1, radio:2
+print(variance_inflation_factor(advdf.values, 1)) # tv / 12.570312383503682
+print(variance_inflation_factor(advdf.values, 2)) # radio / 3.1534983754953845
+# 데이터프레임으로 보기
+vifdf = pd.DataFrame()
+vifdf['vif_value'] = [variance_inflation_factor(advdf.values, i) for i in range(1,3)]
+print(vifdf)
+
+print("참고 : Cook's distance - 극단값(이상치)을 나타내는 지표")
+from statsmodels.stats.outliers_influence import OLSInfluence
+cd, _ = OLSInfluence(lm_mul).cooks_distance
+print(cd.sort_values(ascending=False).head())
+
+import statsmodels.api as sm
+sm.graphics.influence_plot(lm_mul, criterion='cooks' )
+plt.show()
+
+print(advdf.iloc[[130, 5, 35, 178, 126]]) # 이상치 데이터로 의심됨으로 제거를 권장
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
